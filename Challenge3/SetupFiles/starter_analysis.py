@@ -47,6 +47,78 @@ print(df.describe())
 # - Are there duplicates?
 # - What's going on with missing store values?
 
+#change column names
+df.rename(columns={
+    "datum": "date",
+    "kategorie": "category",
+    "bedrag": "amount"
+}, inplace=True)
+
+print("\nUpdated columns:")
+print(df.columns.tolist())
+
+#uniform date format
+df['date'] = pd.to_datetime(df['date'], format = 'mixed').dt.strftime('%Y-%m-%d')
+
+#store names 
+MOTN = ['MOTN', 'mall of the north', 'Mall of North']
+sandton = ['sandton city', 'Sandton city', 'SANDTON CITY', 'Sandton City Mall']
+eastgate = ['eastgate', 'Eastgate Mall', 'East Gate']
+water = ['V&A waterfront', 'VA Waterfront', 'V and A Waterfront','V&A']
+bay = ['Baywest', 'baywest mall', 'Bay West Mall']
+gate = ['Gateway', 'gateway umhlanga', 'Gateway Mall Umhlanga']
+menlyn = ['Menlyn', 'menlyn park', 'Menlyn Park Mall']
+canal = ['Canal walk', 'canal walk', 'Canal Walk Mall']
+
+df['store'] = df['store'].replace(MOTN, 'Mall of the North')
+df['store'] = df['store'].replace(sandton, 'Sandton City')
+df['store'] = df['store'].replace(eastgate, 'Eastgate')
+df['store'] = df['store'].replace(water, 'V&A Waterfront')
+df['store'] = df['store'].replace(bay, 'Baywest Mall')
+df['store'] = df['store'].replace(gate, 'Gateway Umhlanga')
+df['store'] = df['store'].replace(menlyn, 'Menlyn Park')
+df['store'] = df['store'].replace(canal, 'Canal Walk')
+
+#province names
+ec = ['EC', 'E. Cape', 'eastern cape']
+gauteng = ['GP', 'gauteng', 'Gauteng Province', 'GAUTENG']
+kzn = ['KZN', 'Kwazulu-Natal', 'kwazulu natal', 'KwaZulu Natal']
+limpopo = ['LP', 'limpopo', 'Limpopo Province']
+wc = ['WC', 'W. Cape', 'western cape', 'Western cape']
+
+df['province'] = df['province'].replace(ec, 'Eastern Cape')
+df['province'] = df['province'].replace(gauteng, 'Gauteng')
+df['province'] = df['province'].replace(kzn, 'KwaZulu-Natal')
+df['province'] = df['province'].replace(limpopo, 'Limpopo')
+df['province'] = df['province'].replace(wc, 'Western Cape')
+
+#missing province
+df.loc[(df['store'] == 'Mall of the North') & (df['province'].isna()), 'province'] = 'Limpopo'
+df.loc[(df['store'] == 'Sandton City') & (df['province'].isna()), 'province'] = 'Gauteng'
+df.loc[(df['store'] == 'Menlyn Park') & (df['province'].isna()), 'province'] = 'Gauteng'
+df.loc[(df['store'] == 'Eastgate') & (df['province'].isna()), 'province'] = 'Gauteng'
+df.loc[(df['store'] == 'V&A Waterfront') & (df['province'].isna()), 'province'] = 'Western Cape'
+df.loc[(df['store'] == 'Canal Walk') & (df['province'].isna()), 'province'] = 'Western Cape'
+df.loc[(df['store'] == 'Baywest Mall') & (df['province'].isna()), 'province'] = 'Eastern Cape'
+df.loc[(df['store'] == 'Gateway Umhlanga') & (df['province'].isna()), 'province'] = 'KwaZulu-Natal'
+
+#categories
+clothes = ['Clothing', 'clothing', 'Clothes', 'CLOTHING', 'Apparel']
+food = ['Food & Beverage', 'Food', 'food & beverage', 'F&B', 'Food and Beverage']
+home = ['Home & Living', 'Home and Living', 'home & living', 'Home', 'H&L']
+elect = ['Electronics', 'electronics', 'Elec.', 'ELECTRONICS', 'Tech']
+sport = ['Sports', 'sports', 'SPORTS', 'Sports & Outdoors', 'Sport']
+beauty = ['Beauty', 'beauty', 'BEAUTY', 'Beauty & Health', 'Cosmetics']
+
+df['category'] = df['category'].replace(clothes, 'Clothing')
+df['category'] = df['category'].replace(food, 'Food & Beverage')
+df['category'] = df['category'].replace(home, 'Home & Living')
+df['category'] = df['category'].replace(elect, 'Electronics')
+df['category'] = df['category'].replace(sport, 'Sports')
+df['category'] = df['category'].replace(beauty, 'Beauty')
+
+print(df)
+
 
 # === PART 2: EXPLORATORY ANALYSIS ===
 # TODO: Answer the 5 business questions
