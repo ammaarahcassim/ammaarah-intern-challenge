@@ -166,6 +166,23 @@ monthly['percent_change'] = monthly['amount'].pct_change() * 100
 slope = monthly['percent_change'].mean()
 print(f"Trend: {'Growing' if slope > 0 else 'Shrinking'} (Slope: {slope:.2f})")
 
+#3. VISUALISATION OF SEASONAL PATTERN
+monthly = df.groupby('month')['amount'].sum().reset_index()
+monthly = monthly.sort_values('month')
+
+import matplotlib.pyplot as plt
+
+plt.figure()
+plt.plot(monthly['month'].astype(str), monthly['amount'], marker='o')
+
+plt.title("Seasonal Revenue Pattern")
+plt.xlabel("Month")
+plt.ylabel("Total Revenue")
+plt.xticks(rotation=45)
+plt.grid(True)
+
+plt.show()
+
 #4.PROVINCE WITH HIGHEST AVG TRANSACTION
 p = df.groupby('province')['amount'].mean().sort_values(ascending=False).head(1).index[0]
 print("Province with highest average transaction:", p)

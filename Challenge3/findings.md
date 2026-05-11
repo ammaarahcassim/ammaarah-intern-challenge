@@ -60,3 +60,5 @@ I applied an 80/20 split, training the model on the first 80% of the chronologic
 ## Bonus Insight
 
 I conducted a Customer Concentration Analysis and found that the top 10% of customers account for 33.68% of all transactions. This indicates a high level of brand loyalty, suggesting that a small group of "super-users" drives a massive portion of the business.
+
+A key assumption in this analysis is that all transactions with missing store values are categorized as "Online." However, a potential imbalance exists if the business operates on a fulfillment model (similar to Checkers Sixty60). If inventory is pulled from a physical store’s shelves to fulfill an online order, but the revenue is attributed solely to the "Online" channel, the physical store’s performance may appear lower than it actually is (high operational cost, low attributed revenue). For future analysis, tracking the "Fulfillment Location" versus the "Sales Channel" would be necessary to ensure fair performance evaluation across provinces.
